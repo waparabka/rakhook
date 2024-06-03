@@ -17,11 +17,11 @@ PlayerID                    gplayerid;
 using destroy_ri_t        = void(__cdecl *)(void *);
 using handle_rpc_packet_t = bool(__thiscall *)(void *, const char *, int, PlayerID);
 
-std::unique_ptr<kthook::kthook_simple<destroy_ri_t>> destroy_ri_hook;
-std::unique_ptr<kthook::kthook_simple<handle_rpc_packet_t>> handle_rpc_hook;
+kthook::kthook_simple<destroy_ri_t> destroy_ri_hook;
+kthook::kthook_simple<handle_rpc_packet_t> handle_rpc_hook;
 
 // callbacks
-void destroy_rakclient_interface(const kthook::kthook_simple<destroy_ri_t>& hook, void *rakclient_interface) {
+void destroy_rakclient_interface(const decltype(destroy_ri_hook)& hook, void* rakclient_interface) {
 
     if (rakclient_interface == hooked_interface) {
 
@@ -33,7 +33,7 @@ void destroy_rakclient_interface(const kthook::kthook_simple<destroy_ri_t>& hook
     return hook.get_trampoline()(rakclient_interface);
 }
 
-bool handle_rpc_packet(const kthook::kthook_simple<handle_rpc_packet_t>& hook, void *rp, const char *data, int length, PlayerID playerid) {
+bool handle_rpc_packet(const decltype(handle_rpc_hook)& hook, void* rp, const char* data, int length, PlayerID playerid) {
     
     rakpeer   = rp;
     gplayerid = playerid;
@@ -121,15 +121,15 @@ bool rakhook::initialize() {
 
     using namespace std::placeholders;
 
-    destroy_ri_hook->set_dest(offsets::destroy_interface(true));
-    destroy_ri_hook->set_cb(&destroy_rakclient_interface);
+    destroy_ri_hook.set_dest(offsets::destroy_interface(true));
+    destroy_ri_hook.set_cb(&destroy_rakclient_interface);
 
-    destroy_ri_hook->install();
+    destroy_ri_hook.install();
 
-    handle_rpc_hook->set_dest(offsets::handle_rpc_packet(true));
-    handle_rpc_hook->set_cb(&handle_rpc_packet);
+    handle_rpc_hook.set_dest(offsets::handle_rpc_packet(true));
+    handle_rpc_hook.set_cb(&handle_rpc_packet);
 
-    handle_rpc_hook->install();
+    handle_rpc_hook.install();
 
     initialized = true;
 
@@ -184,10 +184,10 @@ bool rakhook::emul_rpc(unsigned char id, RakNet::BitStream &rpc_bs) {
     bs.WriteBits(rpc_bs.GetData(), BYTES_TO_BITS(rpc_bs.GetNumberOfBytesUsed()), false);
 
     handle_rpc_packet_t handle_rpc;
+    
+    if (handle_rpc_hook.get_trampoline()) {
 
-    if (handle_rpc_hook && handle_rpc_hook->get_trampoline()) {
-
-        handle_rpc = std::bit_cast<handle_rpc_packet_t>(handle_rpc_hook->get_trampoline());
+        handle_rpc = std::bit_cast<handle_rpc_packet_t>(handle_rpc_hook.get_trampoline());
 
     } else {
 
