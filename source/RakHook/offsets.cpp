@@ -1,6 +1,6 @@
-#include "samp.hpp"
-#include "detail.hpp"
-#include "offsets.hpp"
+#include "RakHook/samp.hpp"
+#include "RakHook/detail.hpp"
+#include "RakHook/offsets.hpp"
 
 constexpr std::uintptr_t samp_info[]           = {0x21a0f8, 0x26e8dc, 0x26ea0c, 0x2aca24};
 constexpr std::uintptr_t rakclient_interface[] = {0x3c9, 0x2c, 0x2c, 0x2c};

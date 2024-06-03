@@ -1,4 +1,4 @@
-#include "samp.hpp"
+#include "RakHook/samp.hpp"
 
 #include <Windows.h>
 

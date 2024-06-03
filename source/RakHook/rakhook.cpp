@@ -1,8 +1,9 @@
-#include "rakhook.hpp"
-#include "detail.hpp"
-#include "offsets.hpp"
-#include "hooked_rakclient_interface.hpp"
-#include "PacketEnumerations.h"
+#include "RakHook/rakhook.hpp"
+#include "RakHook/detail.hpp"
+#include "RakHook/offsets.hpp"
+#include "RakHook/hooked_rakclient_interface.hpp"
+
+#include "RakNet/PacketEnumerations.h"
 
 
 #ifndef MAX_ALLOCA_STACK_ALLOCATION

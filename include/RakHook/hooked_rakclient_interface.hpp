@@ -22,8 +22,8 @@
 #ifndef RAKHOOK_INTERFACE_HPP
 #define RAKHOOK_INTERFACE_HPP
 
-#include "rakhook.hpp"
-#include "RakClientInterface.h"
+#include "RakHook/rakhook.hpp"
+#include "../RakNet/RakClientInterface.h"
 
 class hooked_rakclient_interface {
 public:

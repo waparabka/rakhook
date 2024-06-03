@@ -8,8 +8,8 @@
 
 #include <kthook/kthook.hpp>
 
-#include "samp.hpp"
-#include "RakClientInterface.h"
+#include "RakHook/samp.hpp"
+#include "RakNet/RakClientInterface.h"
 
 static_assert(sizeof(std::size_t) == 4, "Only 32-bit builds are supported");
 
