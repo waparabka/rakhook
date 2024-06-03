@@ -121,20 +121,15 @@ bool rakhook::initialize() {
 
     using namespace std::placeholders;
 
-    if (!static_cast<bool>(destroy_ri_hook)) {
-        
-        destroy_ri_hook->set_dest(offsets::destroy_interface(true));
-        destroy_ri_hook->set_cb(&destroy_rakclient_interface);
+    destroy_ri_hook->set_dest(offsets::destroy_interface(true));
+    destroy_ri_hook->set_cb(&destroy_rakclient_interface);
 
-        destroy_ri_hook->install();
-    }
-    if (!static_cast<bool>(handle_rpc_hook)) {
+    destroy_ri_hook->install();
 
-        handle_rpc_hook->set_dest(offsets::handle_rpc_packet(true));
-        handle_rpc_hook->set_cb(&handle_rpc_packet);
+    handle_rpc_hook->set_dest(offsets::handle_rpc_packet(true));
+    handle_rpc_hook->set_cb(&handle_rpc_packet);
 
-        handle_rpc_hook->install();
-    }
+    handle_rpc_hook->install();
 
     initialized = true;
 
