@@ -15,6 +15,7 @@ target_include_directories(rakhook PUBLIC
 )
 
 target_compile_features(rakhook PUBLIC cxx_std_20)
+target_link_libraries(rakhook PUBLIC ktsignal kthook xbyak)
 
 target_sources(rakhook PRIVATE
     "RakHook/offsets.cpp"
