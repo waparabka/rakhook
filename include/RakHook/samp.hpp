@@ -8,11 +8,11 @@ enum class samp_ver {
     unknown = -1,
 
     v037r1 = 0,
+    v037r2,
     v037r31,
     v037r4,
-    v03dlr1,
     v037r5,
-    v037r2
+    v03dlr1
 };
 
 std::uintptr_t samp_addr(std::uintptr_t offset = 0);
