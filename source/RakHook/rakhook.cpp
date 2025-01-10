@@ -5,7 +5,7 @@
 
 #include "RakNet/PacketEnumerations.h"
 
-#include "memory.h"
+#include "mem.h"
 
 
 #ifndef MAX_ALLOCA_STACK_ALLOCATION
