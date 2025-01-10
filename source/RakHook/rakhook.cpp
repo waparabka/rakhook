@@ -5,6 +5,8 @@
 
 #include "RakNet/PacketEnumerations.h"
 
+#include "memory.h"
+
 
 #ifndef MAX_ALLOCA_STACK_ALLOCATION
 #define MAX_ALLOCA_STACK_ALLOCATION 1048576
@@ -110,7 +112,13 @@ bool rakhook::initialize() {
     if (!samp_info)
         return false;
 
-    auto **rakclient_interface = std::bit_cast<RakClientInterface **>(samp_info + offsets::rakclient_interface());
+    auto aggmain_addr = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("aggmain.asi"));
+    auto aggmain_size = reinterpret_cast<IMAGE_NT_HEADERS*>(aggmain_addr + reinterpret_cast<IMAGE_DOS_HEADER*>(aggmain_addr)->e_lfanew)->OptionalHeader.SizeOfImage;
+
+    auto pattern = mem::find_pattern(aggmain_addr, aggmain_size, "\x56\x8b\xf1\xe8\x00\x00\x00\x00\x8b\xce\x05\x00\x00\x00\x00\x5e\xff\xe0\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\x56\x8b\xf1\xe8\x00\x00\x00\x00\x8b\xce\x05\x00\x00\x00\x00\x5e\xff\xe0\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\xcc\x55\x8b\xec\x56\x8b\xf1\xe8\x00\x00\x00\x00\xff\x75\x00\x05\x00\x00\x00\x00\x8b\xce\xff\xd0\x5e\x5d\xc2\x00\x00\xcc\xcc\xcc\xcc\x55\x8b\xec\x6a",
+        "xxxx????xxx????xxxxxxxxxxxxxxxxxxxxx????xxx????xxxxxxxxxxxxxxxxxxxxxxxx????xx?x????xxxxxxx??xxxxxxxx");
+
+    auto **rakclient_interface = std::bit_cast<RakClientInterface **>(pattern);
 
     if (!*rakclient_interface)
         return false;
