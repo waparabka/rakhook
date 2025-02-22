@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 project(RakHook VERSION 1.0 LANGUAGES CXX C)
 
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
+
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(RAKHOOK_MASTER_PROJECT ON)
 endif ()
