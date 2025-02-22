@@ -1,8 +1,6 @@
 include(FetchContent)
 include(GNUInstallDirs)
 
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
-
 FetchContent_Declare(ktsignal GIT_REPOSITORY https://github.com/kin4stat/ktsignal.git GIT_TAG f08a19d9a00ad5284871bf44178d835da7b26ebf)
 FetchContent_Declare(kthook GIT_REPOSITORY https://github.com/kin4stat/kthook.git GIT_TAG 21ca70481273d1efcc98ca49063178e46277009b)
 FetchContent_Declare(xbyak GIT_REPOSITORY https://github.com/herumi/xbyak.git GIT_TAG 1c35e34abc359d14d7cba2505f2c851354298f5c)
